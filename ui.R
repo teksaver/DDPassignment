@@ -5,7 +5,7 @@ shinyUI(fluidPage(
   titlePanel(" Combined Cycle Power Plant Prediction"),
   sidebarLayout(
     sidebarPanel(
-      helpText("Input data to predict Net hourly electrical energy output"),
+      helpText("Input data to predict power plant hourly electrical energy output"),
       sliderInput("temperature", 
                   label = "Temperature (Celsius degrees)",
                   min = 1.81, max = 37.11, value = 20.00, round=-2,step=0.01,ticks=TRUE),
@@ -20,9 +20,9 @@ shinyUI(fluidPage(
                   min = 25.36, max =81.56, value = 40, round=-2,step=0.01,ticks=TRUE)
       
     ),
-      mainPanel(
-        p(textOutput("h2(meanVal")),
-        plotOutput("predPlot"))
+    mainPanel(
+      h2(textOutput("meanVal")),
+      plotOutput("predPlot"))
   )
 )
 )

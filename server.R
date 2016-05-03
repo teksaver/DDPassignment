@@ -1,9 +1,4 @@
-# generate regression models for linear regression, random forrests and gdm
-# and import function with prediction results
-source("prediction.R")
-
-g <- ggplot(df,aes(method,value))
-g + geom_bar(stat="identity") +lims(y=c(0,1000))
+source("prediction.R") #model generation and prediction function
 
 library(shiny)
 library(ggplot2)
@@ -15,13 +10,17 @@ shinyServer(function(input, output) {
   })
   
   output$meanVal <- renderText({
-    paste("The mean predicted value is: ",mean(dataPred()(15,50,1000,60)$value))
+    paste("The mean predicted value is: ",round(mean(dataPred()$value),digits=2), " MW")
   })
 
 
   output$predPlot <- renderPlot({
     g <- ggplot(dataPred(),aes(x=method,y=value))
-    g + geom_bar(stat="identity") + coord_cartesian(ylim=c(400, 500))
+    g + geom_bar(stat="identity") + 
+      coord_cartesian(ylim=c(400, 500)) +
+      geom_hline(yintercept=mean(dataPred()$value),linetype="dotted") +
+      ggtitle("Predicted power output according to prediction models")
+
   })
 
 })
